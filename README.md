@@ -15,18 +15,17 @@
 此时目录结构应该是这样
 
 ```
-├── common
-│   ├── common.h
-│   ├── stb_image.h
-│   ├── stb_image_write.h
-│   ├── tengine_operations.c
-│   └── tengine_operations.h
-├── imgs
+├── images
 │   └── cat.jpg
 ├── models
 │   └── mobilenet.tmfile
-├── run.sh
 ├── src
+│   ├── common
+│   │   ├── common.h
+│   │   ├── stb_image.h
+│   │   ├── stb_image_write.h
+│   │   ├── tengine_operations.c
+│   │   └── tengine_operations.h
 │   └── tm_classification.c
 └── tengine
     ├── include
@@ -44,12 +43,12 @@ project(tm_classification)
 
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(tengine/include/ common/)
+include_directories(tengine/include/ src/common/)
 
 add_library(tengine SHARED IMPORTED)
 set_target_properties(tengine PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/tengine/lib/libtengine-lite.so)
 
-add_executable(tm_classification src/tm_classification.c  "common/tengine_operations.c" )
+add_executable(tm_classification src/tm_classification.c  "src/common/tengine_operations.c" )
 
 target_link_libraries(tm_classification -lm tengine)
 
@@ -61,7 +60,7 @@ target_link_libraries(tm_classification -lm tengine)
 mkdir build
 cd build
 cmake ..
-make -j4
+make -j`nproc`
 ```
 
 ## 测试
