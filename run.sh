@@ -1,0 +1,1 @@
+./build/tm_classification -m ./models/mobilenet.tmfile -i ./images/cat.jpg 
